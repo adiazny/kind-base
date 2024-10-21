@@ -15,14 +15,10 @@ MULTI_NODE_KIND_CONFIG :=  multi-node-kind-config.yaml
 
 single-node-cluster:
 	@kind create cluster --name dolo01 --image $(KIND_NODE_VERSION) --config $(SINGLE_NODE_KIND_CONFIG)
-	@echo "\nLabel nodes ingress-ready"
-	@kubectl label node dolo01-control-plane ingress-ready=true
 	@$(MAKE) deploy-dependencies
 
 multi-node-cluster:
 	@kind create cluster --name multi01 --image $(KIND_NODE_VERSION) --config $(MULTI_NODE_KIND_CONFIG)
-	@echo "\nLabel nodes ingress-ready"
-	@kubectl label node multi01-worker ingress-ready=true
 	@$(MAKE) deploy-dependencies
 
 deploy-dependencies: deploy-calico deploy-ingress-nginx
